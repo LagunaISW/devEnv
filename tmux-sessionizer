@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+session=$(find ~ ~/Dev ~/EOG -mindepth 1 -maxdepth 1 -type d | fzf)
+sessiona_name=$(basename "$session" | tr . _)
+
+if ! tmux has-session -t "$sessiona_name" 2> /dev/null; then
+    tmux new-session -s "$sessiona_name" -c "$session" -d
+fi
+
+tmux switch-client -t "$sessiona_name"
